@@ -1,3 +1,4 @@
+import FoodOrbit from "../FoodOrbit/FoodOrbit"
 export default function Hero() {
     return (
         <>
@@ -11,6 +12,7 @@ export default function Hero() {
                         </p>
                     </div>
                     <div className="w-full flex  justify-between gap-2 ">
+
                         <div className="flex flex-col">
                             <h2 className="text-[#333333] font-medium text-[28px] italic">
                                 One stop, many routes
@@ -35,6 +37,8 @@ export default function Hero() {
                             </div>
                         </div>
                     </div>
+
+
                 </div>
 
             </section>
