@@ -3,17 +3,13 @@ import Image from 'next/image';
 export default function Navbar() {
     return (
         <nav className="relative  px-8 py-3">
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
-
-                {/* Logo */}
+            <div className="max-w-7xl mx-auto flex items-center justify-between">   
                 <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full border flex items-center justify-center">
                         🍜
                     </div>
                     <h1 className="font-bold text-lg text-black">Food Stop</h1>
                 </div>
-
-               
                 <div className="hidden md:flex items-center gap-8 text-sm text-gray-600">
                     <a href="#" className="hover:text-black transition">
                         Dine out
@@ -26,16 +22,15 @@ export default function Navbar() {
                     </a>
                 </div>
                 <div className='flex items-center gap-8'>
-                    <div className="w-8 h-8 border border-black/50 p-2 rounded-lg ">
+                    <div className="w-8 h-8 border  p-2 rounded-lg bg-white ">
                         <Image
                             src="/navbar/Location icon.png"
                             alt="Location icon"
                             width={24}
                             height={24}
-                            className="w-full h-full object-contain cursor-pointer"
+                            className="w-full h-full object-contain cursor-pointer "
                         />
                     </div>
-
                     <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 w-87.5">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -51,12 +46,10 @@ export default function Navbar() {
                                 d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"
                             />
                         </svg>
-
                         <input
                             type="text"
                             placeholder="Search your favourite food"
-                            className=" outline-none ml-2 w-full text-sm text-black-400"
-                        />
+                            className=" outline-none ml-2 w-full text-sm text-black-400" />
                     </div>
                 </div>
                 <div className="flex items-center gap-5">

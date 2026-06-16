@@ -1,4 +1,4 @@
-import FoodOrbit from "../FoodOrbit/FoodOrbit"
+import Image from "next/image"
 export default function Hero() {
     return (
         <>
@@ -22,19 +22,42 @@ export default function Hero() {
                                 <button className="border bg-[#F7D297BF] rounded-full px-9 py-3 text-[#333333] border-none">Order now!</button>
                             </div>
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex items-center">
+                            <Image
+                                className="-mr-2 cursor-pointer"
+                                src="/TrigerButton/Ellipse 9.png"
+                                alt=""
+                                width={56}
+                                height={35}
+                            />
 
-                            <div className="flex gap-6">
-                                <div className="w-12 h-12 rounded-full bg-gray-300 shadow-md"></div>
+                            <Image
+                                className="-mr-2"
+                                src="/TrigerButton/Vector 1.png"
+                                alt=""
+                                width={59}
+                                height={8}
+                            />
 
-
-                                <div className="px-12 py-3 rounded-full bg-[#E8C88B] shadow-md">
-                                    South Indian Cuisine
-                                </div>
-
-
-                                <div className="w-12 h-12 rounded-full bg-gray-300 shadow-md"></div>
+                            <div className="px-12 py-3 rounded-full bg-[#E8C88B] text-black">
+                                South Indian Cuisine
                             </div>
+
+                            <Image
+                                className="-ml-2 "
+                                src="/TrigerButton/Vector.png"
+                                alt=""
+                                width={59}
+                                height={8}
+                            />
+
+                            <Image
+                                className="-ml-2 cursor-pointer"
+                                src="/TrigerButton/Ellipse 11.png"
+                                alt=""
+                                width={56}
+                                height={35}
+                            />
                         </div>
                     </div>
 
