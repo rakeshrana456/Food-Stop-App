@@ -1,5 +1,9 @@
 import Image from "next/image"
-export default function Hero() {
+type HeroProps = {
+  orbitRef: React.RefObject<any>;
+};
+
+export default function Hero({ orbitRef }: HeroProps) {
     return (
         <>
             <section className="relative overflow-hidden min-h-205">
@@ -29,6 +33,7 @@ export default function Hero() {
                                 alt=""
                                 width={56}
                                 height={35}
+                                  onClick={() => orbitRef.current.rotateAntiClockwise()}
                             />
 
                             <Image
@@ -57,6 +62,7 @@ export default function Hero() {
                                 alt=""
                                 width={56}
                                 height={35}
+                                onClick={() => orbitRef.current.rotateClockwise()}
                             />
                         </div>
                     </div>
