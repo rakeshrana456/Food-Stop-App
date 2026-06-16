@@ -9,27 +9,27 @@ export default function Home() {
   const orbitRef = useRef(null);
   const dishes = [
     {
-      name: "Italian",
+      name: "Italian Cusinie",
       image: "/dishes/Italian.png",
       color: "#F45E5E",
     },
     {
-      name: "Mexican",
+      name: "Mexican Cusinie",
       image: "/dishes/Mexican.png",
       color: "#F4A261",
     },
     {
-      name: "Thali",
+      name: "Indian Cusinie",
       image: "/dishes/Thalli.png",
       color: "#DDB892",
     },
     {
-      name: "Yummi",
+      name: "French Cusinie",
       image: "/dishes/yummi.png",
       color: "#FFD6A5",
     },
     {
-      name: "Salad",
+      name: "Healthy Salad",
       image: "/dishes/salad.png",
       color: "#A7C957",
     },

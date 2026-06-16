@@ -21,15 +21,16 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
     rotateClockwise() {
       gsap.to(orbitRef.current, {
         rotation: "+=72",
-        duration: 1,
+        duration: 2,
         ease: "power2.inOut",
+        
       });
     },
 
     rotateAntiClockwise() {
       gsap.to(orbitRef.current, {
         rotation: "-=72",
-        duration: 1,
+        duration: 2,
         ease: "power2.inOut",
   
       });

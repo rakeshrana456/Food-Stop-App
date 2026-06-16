@@ -1,4 +1,6 @@
+'use client'
 import Image from "next/image"
+import { useEffect } from "react";
 type HeroProps = {
     orbitRef: React.RefObject<any>;
     dishes: any[];
@@ -12,17 +14,13 @@ export default function Hero({
     activeIndex,
     setActiveIndex,
 }: HeroProps) {
-
     const activeDish = dishes[activeIndex];
-
     const nextDish = () => {
         orbitRef.current?.rotateClockwise();
-
         setActiveIndex(
             (prev) => (prev + 1) % dishes.length
         );
     };
-
     const prevDish = () => {
         orbitRef.current?.rotateAntiClockwise();
 
@@ -30,6 +28,21 @@ export default function Hero({
             (prev) => (prev - 1 + dishes.length) % dishes.length
         );
     };
+    useEffect(() => {
+  const handleWheel = (e: WheelEvent) => {
+    if (e.deltaY > 0) {
+      nextDish();
+    } else {
+      prevDish();
+    }
+  };
+
+  window.addEventListener("wheel", handleWheel);
+
+  return () => {
+    window.removeEventListener("wheel", handleWheel);
+  };
+}, []);
     return (
         <>
             <section className="relative overflow-hidden min-h-205">
@@ -37,7 +50,7 @@ export default function Hero({
                     <div className="w-100 flex flex-col gap-2 ">
                         <h2 className="text-[#EFA662B5] font-bold text-5xl" style={{
                             color: activeDish.color,
-                        }}>Delicious</h2>
+                        }}>Delicious.</h2>
                         <h2 className="text-[#333333b8] font-medium text-4xl">One stop destination</h2>
                         <p className="text-black text-sm">Hunger pangs? You’re at the right stop to drive it away!
                             Order delicious food or reserve a table at your next cafe from the comfort of your home!
@@ -50,10 +63,16 @@ export default function Hero({
                                 One stop, many routes
                             </h2>
                             <div className="flex gap-6">
-                                <button className="border border-[#D3CDCD] rounded-full p-3 text-[#F7D297]" style={{
-                                    color: activeDish.color,
-                                }}>Book a table</button>
-                                <button className="border bg-[#F7D297BF] rounded-full px-9 py-3 text-[#333333] border-none" style={{
+                                <button
+                                    className="border rounded-full p-3"
+                                    style={{
+                                        color: activeDish.color,
+                                        borderColor: activeDish.color,
+                                    }}
+                                >
+                                    Book a table
+                                </button>
+                                <button className="border bg-[#F7D297BF] rounded-full px-9 py-3 text-[#333333] border-none font-bold" style={{
                                     backgroundColor: activeDish.color,
                                 }}>Order now!</button>
                             </div>
