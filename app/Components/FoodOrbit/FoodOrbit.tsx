@@ -4,16 +4,17 @@ import Image from "next/image";
 import { useRef, forwardRef, useImperativeHandle } from "react";
 import gsap from "gsap";
 
-const dishes = [
-  "/dishes/Italian.png",
-  "/dishes/Mexican.png",
-  "/dishes/Thalli.png",
-  "/dishes/yummi.png",
-  "/dishes/salad.png",,
-  "/dishes/simpleThali.png"
-];
 
-const FoodOrbit = forwardRef((props, ref) => {
+type FoodOrbitProps = {
+  dishes: {
+    name: string;
+    image: string;
+    color: string;
+  }[];
+  activeIndex: number;
+};
+const FoodOrbit = forwardRef<any, FoodOrbitProps>(
+  ({ dishes, activeIndex }, ref) => {
   const orbitRef = useRef(null);
 
   useImperativeHandle(ref, () => ({
@@ -30,22 +31,20 @@ const FoodOrbit = forwardRef((props, ref) => {
         rotation: "-=72",
         duration: 1,
         ease: "power2.inOut",
+  
       });
     },
   }));
-
+const activeDish = dishes[activeIndex];
   return (
     <div className="relative w-150 h-150">
       
 
-      <div className="absolute inset-0 flex items-center justify-center z-20">
-        <div className="w-55 h-55 rounded-full bg-orange-300 flex items-center justify-center text-xl font-semibold">
-          Main Dish
-        </div>
-      </div>
+    
 
       <div ref={orbitRef} className="absolute inset-0">
 
+        {/* Circle */}
         <svg
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 600 600"
@@ -69,7 +68,7 @@ const FoodOrbit = forwardRef((props, ref) => {
           return (
             <div
               key={index}
-              className="absolute left-1/2 top-1/2"
+              className="absolute left-1/2 top-[300px]"
               style={{
                 transform: `
                   translate(-50%, -50%)
@@ -83,21 +82,35 @@ const FoodOrbit = forwardRef((props, ref) => {
                   transform: `rotate(-${angle}deg)`,
                 }}
               >
-                <Image
-                  src={dish}
-                  alt={`Dish ${index + 1}`}
-                  width={100}
-                  height={100}
-                  className="rounded-full"
-                />
+              <Image
+  src={dish.image}
+  alt={dish.name}
+  width={100}
+  height={100}
+  className="rounded-full"
+/>
               </div>
             </div>
           );
         })}
       </div>
+        <div className="absolute inset-0 flex items-center justify-center z-20">
+       <div className="w-55 h-55 rounded-full overflow-hidden">
+  <Image
+    src={activeDish.image}
+    alt={activeDish.name}
+    width={220}
+    height={220}
+    className="w-full h-full object-cover"
+  />
+</div>
+      </div>
     </div>
+    
   );
 });
+
+
 
 FoodOrbit.displayName = "FoodOrbit";
 

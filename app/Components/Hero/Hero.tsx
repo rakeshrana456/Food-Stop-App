@@ -1,15 +1,43 @@
 import Image from "next/image"
 type HeroProps = {
-  orbitRef: React.RefObject<any>;
+    orbitRef: React.RefObject<any>;
+    dishes: any[];
+    activeIndex: number;
+    setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function Hero({ orbitRef }: HeroProps) {
+export default function Hero({
+    orbitRef,
+    dishes,
+    activeIndex,
+    setActiveIndex,
+}: HeroProps) {
+
+    const activeDish = dishes[activeIndex];
+
+    const nextDish = () => {
+        orbitRef.current?.rotateClockwise();
+
+        setActiveIndex(
+            (prev) => (prev + 1) % dishes.length
+        );
+    };
+
+    const prevDish = () => {
+        orbitRef.current?.rotateAntiClockwise();
+
+        setActiveIndex(
+            (prev) => (prev - 1 + dishes.length) % dishes.length
+        );
+    };
     return (
         <>
             <section className="relative overflow-hidden min-h-205">
                 <div className="relative z-10 max-w-7xl mx-auto min-h-175 flex flex-col justify-end gap-15">
                     <div className="w-100 flex flex-col gap-2 ">
-                        <h2 className="text-[#EFA662B5] font-bold text-5xl">Delicious</h2>
+                        <h2 className="text-[#EFA662B5] font-bold text-5xl" style={{
+                            color: activeDish.color,
+                        }}>Delicious</h2>
                         <h2 className="text-[#333333b8] font-medium text-4xl">One stop destination</h2>
                         <p className="text-black text-sm">Hunger pangs? You’re at the right stop to drive it away!
                             Order delicious food or reserve a table at your next cafe from the comfort of your home!
@@ -22,8 +50,12 @@ export default function Hero({ orbitRef }: HeroProps) {
                                 One stop, many routes
                             </h2>
                             <div className="flex gap-6">
-                                <button className="border border-[#D3CDCD] rounded-full p-3 text-[#F7D297]">Book a table</button>
-                                <button className="border bg-[#F7D297BF] rounded-full px-9 py-3 text-[#333333] border-none">Order now!</button>
+                                <button className="border border-[#D3CDCD] rounded-full p-3 text-[#F7D297]" style={{
+                                    color: activeDish.color,
+                                }}>Book a table</button>
+                                <button className="border bg-[#F7D297BF] rounded-full px-9 py-3 text-[#333333] border-none" style={{
+                                    backgroundColor: activeDish.color,
+                                }}>Order now!</button>
                             </div>
                         </div>
                         <div className="flex items-center">
@@ -33,7 +65,7 @@ export default function Hero({ orbitRef }: HeroProps) {
                                 alt=""
                                 width={56}
                                 height={35}
-                                  onClick={() => orbitRef.current.rotateAntiClockwise()}
+                                onClick={prevDish}
                             />
 
                             <Image
@@ -44,8 +76,13 @@ export default function Hero({ orbitRef }: HeroProps) {
                                 height={8}
                             />
 
-                            <div className="px-12 py-3 rounded-full bg-[#E8C88B] text-black">
-                                South Indian Cuisine
+                            <div
+                                className="px-12 py-3 rounded-full text-black transition-all duration-500"
+                                style={{
+                                    backgroundColor: activeDish.color,
+                                }}
+                            >
+                                {activeDish.name}
                             </div>
 
                             <Image
@@ -62,7 +99,7 @@ export default function Hero({ orbitRef }: HeroProps) {
                                 alt=""
                                 width={56}
                                 height={35}
-                                onClick={() => orbitRef.current.rotateClockwise()}
+                                onClick={nextDish}
                             />
                         </div>
                     </div>
