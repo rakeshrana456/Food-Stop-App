@@ -23,7 +23,7 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
       rotateClockwise() {
         gsap.to(dishesContainerRef.current, {
           rotation: "+=72",
-          duration: 2,
+          duration: 1,
           ease: "power2.inOut",
         });
       },
@@ -31,12 +31,11 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
       rotateAntiClockwise() {
         gsap.to(dishesContainerRef.current, {
           rotation: "-=72",
-          duration: 2,
+          duration: 1,
           ease: "power2.inOut",
         });
       },
 
-      // Method to hide specific dish with animation
       hideDish(index: number) {
         const dishElement = dishRefs.current[index];
         if (dishElement) {
@@ -55,12 +54,15 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
     const centerX = 300; 
     const centerY = 300; 
 
-    // Function to calculate position on the arc
+    // Get only visible dishes (excluding active dish)
+    const visibleDishes = dishes.filter((_, index) => index !== activeIndex);
+    
+    // Take only first 5 visible dishes
+    const dishesToShow = visibleDishes.slice(0, 5);
+
     const getPositionOnArc = (index: number, totalDishes: number) => {
-      const startAngle = -180; 
-      const endAngle = 0; 
-      
-      const angleDeg = startAngle + (index * (endAngle - startAngle)) / (totalDishes - 1);
+      // Spread 5 dishes across 360 degrees but only show on top arc
+      const angleDeg = (index * (360 / totalDishes));
       const angleRad = (angleDeg * Math.PI) / 180;
       
       const x = centerX + radius * Math.cos(angleRad);
@@ -70,13 +72,13 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
     };
 
     return (
-      <div className="relative w-150 h-150">
-        {/* Static arc - doesn't rotate */}
+      <div className="relative w-[600px] h-[600px]">
+       
         <svg
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 600 600"
         >
-          {/* Arc path - stays fixed */}
+          {/* Arc path - top half only */}
           <path
             d={`M ${centerX - radius} ${centerY} A ${radius} ${radius} 0 0 1 ${centerX + radius} ${centerY}`}
             fill="none"
@@ -87,18 +89,18 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
           />
         </svg>
 
-        {/* Rotating container for dishes only */}
+        {/* Rotating container for dishes */}
         <div ref={dishesContainerRef} className="absolute inset-0">
-          {/* Dishes positioned along the arc */}
-          {dishes.map((dish, index) => {
-            const { x, y, angleDeg } = getPositionOnArc(index, dishes.length);
-            const isHidden = hiddenDishes.includes(index);
+          {dishesToShow.map((dish, index) => {
+            const { x, y, angleDeg } = getPositionOnArc(index, dishesToShow.length);
+            const originalIndex = dishes.indexOf(dish);
+            const isHidden = hiddenDishes.includes(originalIndex);
 
             return (
               <div
-                key={index}
+                key={originalIndex}
                 ref={(el) => {
-                  dishRefs.current[index] = el;
+                  dishRefs.current[originalIndex] = el;
                 }}
                 className="absolute transition-all duration-500"
                 style={{
@@ -114,22 +116,13 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
                   }}
                 >
                   <div className="relative">
-                
-                    <div className={`w-[100px] h-[100px] rounded-full flex items-center justify-center transition-all duration-300 ${
-                      index === activeIndex ? '' : ''
-                    }`}
-                    style={{
-                      backgroundColor: dish.color + '0',
-                      
-                    }}>
+                    <div className="w-[100px] h-[100px] rounded-full flex items-center justify-center">
                       <Image
                         src={dish.image}
                         alt={dish.name}
                         width={80}
                         height={80}
-                        className={`rounded-full transition-all duration-300 ${
-                          isHidden ? 'scale-0' : 'scale-100'
-                        }`}
+                        className="rounded-full"
                       />
                     </div>
                   </div>
@@ -140,7 +133,7 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
         </div>
 
         {/* Center active dish */}
-        <div className="absolute inset-0 flex items-center justify-center z-20">
+        {/* <div className="absolute inset-0 flex items-center justify-center z-20">
           <div className="w-55 h-55 rounded-full overflow-hidden border-4 border-white shadow-2xl">
             <Image
               src={activeDish.image}
@@ -150,7 +143,7 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
               className="w-full h-full object-cover"
             />
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

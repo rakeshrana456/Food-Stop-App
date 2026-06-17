@@ -38,6 +38,7 @@ export default function Home() {
       image: "/dishes/simpleThali.png",
       color: "#F7D297",
     },
+    
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -54,9 +55,20 @@ export default function Home() {
           style={{
             backgroundColor: activeDish.color,
           }}
-        />
-
-        <div className="absolute right-70  top-55 z-20">
+          
+        ></div>
+<div className="absolute inset-0 flex items-center justify-center -right-186 top-50 z-20">
+          <div className="w-55 h-55 rounded-full overflow-hidden border-4 border-white shadow-2xl">
+            <Image
+              src={activeDish.image}
+              alt={activeDish.name}
+              width={220}
+              height={220}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+        <div className="absolute right-70  top-67 z-20  h-80 overflow-hidden rounded-full">
           <FoodOrbit
             ref={orbitRef}
             dishes={dishes}

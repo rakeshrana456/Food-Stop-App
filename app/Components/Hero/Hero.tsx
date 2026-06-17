@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image"
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 type HeroProps = {
     orbitRef: React.RefObject<any>;
     dishes: any[];
@@ -15,32 +15,56 @@ export default function Hero({
     setActiveIndex,
 }: HeroProps) {
     const activeDish = dishes[activeIndex];
-    const nextDish = () => {
-        orbitRef.current?.rotateClockwise();
-        setActiveIndex(
-            (prev) => (prev + 1) % dishes.length
-        );
-    };
-    const prevDish = () => {
-        orbitRef.current?.rotateAntiClockwise();
-        setActiveIndex(
-            (prev) => (prev - 1 + dishes.length) % dishes.length);
-    };
+   const nextDish = () => {
+    if (isAnimating.current) return;
+
+    isAnimating.current = true;
+
+    orbitRef.current?.rotateClockwise();
+
+    setActiveIndex(
+        (prev) => (prev + 1) % dishes.length
+    );
+
+    setTimeout(() => {
+        isAnimating.current = false;
+    }, 1000);
+};
+   const prevDish = () => {
+    if (isAnimating.current) return;
+
+    isAnimating.current = true;
+
+    orbitRef.current?.rotateAntiClockwise();
+
+    setActiveIndex(
+        (prev) => (prev - 1 + dishes.length) % dishes.length
+    );
+
+    setTimeout(() => {
+        isAnimating.current = false;
+    }, 1000);
+};
     useEffect(() => {
-        const handleWheel = (e: WheelEvent) => {
-            if (e.deltaY > 0) {
-                nextDish();
-            } else {
-                prevDish();
-            }
-        };
+    const handleWheel = (e: WheelEvent) => {
+        e.preventDefault();
 
-        window.addEventListener("wheel", handleWheel);
+        if (e.deltaY > 0) {
+            nextDish();
+        } else {
+            prevDish();
+        }
+    };
 
-        return () => {
-            window.removeEventListener("wheel", handleWheel);
-        };
-    }, []);
+    window.addEventListener("wheel", handleWheel, {
+        passive: false,
+    });
+
+    return () => {
+        window.removeEventListener("wheel", handleWheel);
+    };
+}, []);
+    const isAnimating = useRef(false);
     return (
         <>
             <section className="relative overflow-hidden min-h-205">
@@ -54,7 +78,7 @@ export default function Hero({
                             Order delicious food or reserve a table at your next cafe from the comfort of your home!
                         </p>
                     </div>
-                    <div className="w-full flex  justify-between gap-2 ">
+                    <div className="w-full flex  justify-between gap-2 relative top-9 ">
 
                         <div className="flex flex-col">
                             <h2 className="text-[#333333] font-medium text-[28px] italic">
