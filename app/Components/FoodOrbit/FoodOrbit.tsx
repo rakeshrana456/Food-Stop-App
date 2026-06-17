@@ -114,13 +114,13 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
                   }}
                 >
                   <div className="relative">
-                    {/* Equal sized plate/circle for all dishes */}
+                
                     <div className={`w-[100px] h-[100px] rounded-full flex items-center justify-center transition-all duration-300 ${
-                      index === activeIndex ? 'ring-4 ring-yellow-400 scale-110' : ''
+                      index === activeIndex ? '' : ''
                     }`}
                     style={{
-                      backgroundColor: dish.color + '20',
-                      border: `3px solid ${dish.color}`,
+                      backgroundColor: dish.color + '0',
+                      
                     }}>
                       <Image
                         src={dish.image}
@@ -132,18 +132,6 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
                         }`}
                       />
                     </div>
-                    
-                    {/* Optional: Show dish name on hover or for active */}
-                    {index === activeIndex && (
-                      <div 
-                        className="absolute -bottom-6 left-1/2 -translate-x-1/2 
-                                 text-xs font-semibold whitespace-nowrap px-2 py-1 
-                                 rounded-full bg-white shadow-md"
-                        style={{ color: dish.color }}
-                      >
-                        {dish.name}
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>
