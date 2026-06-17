@@ -21,7 +21,7 @@ export default function Home() {
     {
       name: "Indian Cusinie",
       image: "/dishes/Thalli.png",
-      color: "#DDB892",
+      color: " #0056B3",
     },
     {
       name: "French Cusinie",
@@ -34,11 +34,25 @@ export default function Home() {
       color: "#A7C957",
     },
     {
-      name: "South Indian Cusinie",
-      image: "/dishes/simpleThali.png",
-      color: "#F7D297",
+      name: "French Cusinie",
+      image: "/dishes/yummi.png",
+      color: "#FFD6A5",
     },
-    
+    {
+      name: "Healthy Salad",
+      image: "/dishes/salad.png",
+      color: "#A7C957",
+    },
+    {
+      name: "French Cusinie",
+      image: "/dishes/yummi.png",
+      color: "#FFD6A5",
+    },
+    {
+      name: "Healthy Salad",
+      image: "/dishes/salad.png",
+      color: "#A7C957",
+    },
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -51,13 +65,19 @@ export default function Home() {
 
 
         <div
-          className="absolute -top-125 -right-50 w-391 h-275 rounded-b-full transition-all duration-500"
+          className="absolute -top-125 -right-50 w-391 h-275 rounded-b-full transition-all duration-500 overflow-x-hidden"
           style={{
             backgroundColor: activeDish.color,
           }}
-          
-        ></div>
-<div className="absolute inset-0 flex items-center justify-center -right-186 top-50 z-20">
+
+        > <div className="absolute right-120  top-197 z-20  h-80 overflow-hidden">
+            <FoodOrbit
+              ref={orbitRef}
+              dishes={dishes}
+              activeIndex={activeIndex}
+            />
+          </div></div>
+        <div className="absolute inset-0 flex items-center justify-center -right-186 top-50 z-20">
           <div className="w-55 h-55 rounded-full overflow-hidden border-4 border-white shadow-2xl">
             <Image
               src={activeDish.image}
@@ -68,15 +88,6 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="absolute right-70  top-67 z-20  h-80 overflow-hidden rounded-full">
-          <FoodOrbit
-            ref={orbitRef}
-            dishes={dishes}
-            activeIndex={activeIndex}
-          />
-        </div>
-
-
         <div className="relative z-30">
           <Navbar />
           <Hero

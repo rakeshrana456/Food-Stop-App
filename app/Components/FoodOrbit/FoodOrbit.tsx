@@ -51,34 +51,31 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
 
     const activeDish = dishes[activeIndex];
     const radius = 260;
-    const centerX = 300; 
-    const centerY = 300; 
+    const centerX = 300;
+    const centerY = 300;
 
-    // Get only visible dishes (excluding active dish)
-    const visibleDishes = dishes.filter((_, index) => index !== activeIndex);
-    
-    // Take only first 5 visible dishes
-    const dishesToShow = visibleDishes.slice(0, 5);
+   
+    const dishesToShow = dishes.slice(0, 5);
 
     const getPositionOnArc = (index: number, totalDishes: number) => {
-      // Spread 5 dishes across 360 degrees but only show on top arc
-      const angleDeg = (index * (360 / totalDishes));
+      // Spread dishes evenly along the top semicircle
+      const angleDeg = index * (180 / (totalDishes - 1));
       const angleRad = (angleDeg * Math.PI) / 180;
-      
+
       const x = centerX + radius * Math.cos(angleRad);
-      const y = centerY + radius * Math.sin(angleRad);
-      
+      const y = centerY - radius * Math.sin(angleRad);
+
       return { x, y, angleDeg };
     };
 
     return (
-      <div className="relative w-[600px] h-[600px]">
-       
+      <div className="relative w-150 h-150">
+
         <svg
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 w-full h-full "
           viewBox="0 0 600 600"
         >
-          {/* Arc path - top half only */}
+
           <path
             d={`M ${centerX - radius} ${centerY} A ${radius} ${radius} 0 0 1 ${centerX + radius} ${centerY}`}
             fill="none"
@@ -89,7 +86,7 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
           />
         </svg>
 
-        {/* Rotating container for dishes */}
+        
         <div ref={dishesContainerRef} className="absolute inset-0">
           {dishesToShow.map((dish, index) => {
             const { x, y, angleDeg } = getPositionOnArc(index, dishesToShow.length);
@@ -131,19 +128,6 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
             );
           })}
         </div>
-
-        {/* Center active dish */}
-        {/* <div className="absolute inset-0 flex items-center justify-center z-20">
-          <div className="w-55 h-55 rounded-full overflow-hidden border-4 border-white shadow-2xl">
-            <Image
-              src={activeDish.image}
-              alt={activeDish.name}
-              width={220}
-              height={220}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div> */}
       </div>
     );
   }

@@ -10,7 +10,7 @@ export default function Navbar() {
                     </div>
                     <h1 className="font-bold text-lg text-black">Food Stop</h1>
                 </div>
-                <div className="hidden md:flex items-center gap-8 text-sm text-gray-600">
+                <div className="hidden md:flex items-center gap-8 text-sm text-black">
                     <a href="#" className="hover:text-black transition">
                         Dine out
                     </a>
