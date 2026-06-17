@@ -53,6 +53,7 @@ export default function Home() {
       image: "/dishes/salad.png",
       color: "#A7C957",
     },
+    
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);

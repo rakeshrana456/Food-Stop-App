@@ -55,11 +55,17 @@ const FoodOrbit = forwardRef<any, FoodOrbitProps>(
     const centerY = 300;
 
    
-    const dishesToShow = dishes.slice(0, 5);
+  const dishesToShow = [];
+
+for (let i = 1; i < dishes.length; i++) {
+  dishesToShow.push(
+    dishes[(activeIndex + i) % dishes.length]
+  );
+}
 
     const getPositionOnArc = (index: number, totalDishes: number) => {
       // Spread dishes evenly along the top semicircle
-      const angleDeg = index * (180 / (totalDishes - 1));
+      const angleDeg = 45+ index *45;
       const angleRad = (angleDeg * Math.PI) / 180;
 
       const x = centerX + radius * Math.cos(angleRad);
