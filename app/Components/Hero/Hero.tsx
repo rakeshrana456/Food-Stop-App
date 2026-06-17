@@ -23,26 +23,24 @@ export default function Hero({
     };
     const prevDish = () => {
         orbitRef.current?.rotateAntiClockwise();
-
         setActiveIndex(
-            (prev) => (prev - 1 + dishes.length) % dishes.length
-        );
+            (prev) => (prev - 1 + dishes.length) % dishes.length);
     };
     useEffect(() => {
-  const handleWheel = (e: WheelEvent) => {
-    if (e.deltaY > 0) {
-      nextDish();
-    } else {
-      prevDish();
-    }
-  };
+        const handleWheel = (e: WheelEvent) => {
+            if (e.deltaY > 0) {
+                nextDish();
+            } else {
+                prevDish();
+            }
+        };
 
-  window.addEventListener("wheel", handleWheel);
+        window.addEventListener("wheel", handleWheel);
 
-  return () => {
-    window.removeEventListener("wheel", handleWheel);
-  };
-}, []);
+        return () => {
+            window.removeEventListener("wheel", handleWheel);
+        };
+    }, []);
     return (
         <>
             <section className="relative overflow-hidden min-h-205">

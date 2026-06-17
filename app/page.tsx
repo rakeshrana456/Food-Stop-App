@@ -56,7 +56,7 @@ export default function Home() {
           }}
         />
 
-        <div className="absolute right-70  top-20 z-20">
+        <div className="absolute right-70  top-55 z-20">
           <FoodOrbit
             ref={orbitRef}
             dishes={dishes}
